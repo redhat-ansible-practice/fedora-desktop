@@ -1,0 +1,65 @@
+---
+# tasks file for fedora-desktop
+---
+# tasks file for rhel-software
+  - name: Update system
+    yum:
+     name: "*"
+     state: latest
+
+  - name: install all the cool rpms
+    yum: 
+     name: "{{ yum_software }}" 
+     state:latest
+    ignore_error: yes
+
+  - name: add the slack repo # I found this repo after I installed slack.
+    yum_repository: 
+     name: slack 
+     baseurl: "{{ slack_repo }}" 
+     description: slack 
+     enabled: 1 
+     gpgcheck: yes 
+     gpgkey: "{{ slack_key }}" 
+     sslverify: 1 
+     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+
+  - name: Install rocketchat
+    yum: name: "{{ rocket }}" 
+     state=installed
+
+  - name: Install Atom
+    yum: 
+     name: "{{ atom }}" 
+     state: installed
+     
+  - name: Install slack
+    yum: 
+     name: "{{ slack }}" 
+     state: installed
+
+  - name: Git clone oh-my-zsh
+    git: 
+     repo: "{{ zsh }}" 
+     dest: "{{ jlozadad }}"
+
+  - name: Download oh-my-zsh install.sh
+    get_url: 
+     url: "{{ install }}" 
+     dest: "{{ jlozadad }}"  
+     mode: 755
+
+  - name: run the install.sh
+    shell: install.sh
+     args:
+      chdir: "{{ jlozadad }}"
+    ignore_errors: yes
+
+  - name: make install.sh executable
+    file: "{{ jlozada }}"/oh-my-zsh/
+    mode: 755
+
+#- name: install oh-my-zsh
+#  command:
+
