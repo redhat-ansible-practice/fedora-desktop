@@ -2,65 +2,61 @@
 # tasks file for fedora-desktop
 ---
 # tasks file for rhel-software
-  - name: Update system
-    dnf:
-      name: "*"
-      state: latest
+  - block:
+      - name: Update system
+        dnf:
+          name: "*"
+          state: latest
 
-  - name: install all the cool rpms
-    dnf: 
-      name: "{{ dnf_software }}" 
-       state:latest
-    ignore_error: yes
+      - name: install rpmfusion free
+        dnf:
+          name: "{{ rpmfusion_free }}"
+          state: latest
 
-  - name: add the slack repo # I found this repo after I installed slack.
-    yum_repository: 
-      name: slack 
-      baseurl: "{{ slack_repo }}" 
-      description: slack 
-      enabled: 1 
-      gpgcheck: yes 
-      gpgkey: "{{ slack_key }}" 
-      sslverify: 1 
-      sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+      - name: install rpmfusion nonfree
+        dnf:
+          name: "{{ rpmfusion_nonfree }}"
+          state: latest
 
+      - name: add the slack repo # I found this repo after I installed slack.
+        yum_repository: 
+          name: slack 
+          baseurl: "{{ slack_repo }}" 
+          description: slack 
+          enabled: 1 
+          gpgcheck: yes 
+          gpgkey: "{{ slack_key }}" 
+          sslverify: 1 
+          sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 
-  - name: Install rocketchat
-    dnf: 
-      name: "{{ rocket }}" 
-      state: installed
+      - name: add the rocketchat repo
+        yum_repository:
+          name: slack
+          baseurl: "{{ rocketchat_repo }}"
+          description: rocketchat
+          enabled: 1
+          gpgcheck: yes
+          gpgkey: "{{ rocketchat_key }}"
+          sslverify: 1
+          sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 
-  - name: Install Atom
-    dnf: 
-      name: "{{ atom }}" 
-      state: installed
-     
-  - name: Install slack
-    dnf: 
-      name: "{{ slack }}" 
-      state: installed
+      - name: add riot matrix repo
+        get_url:
+          url: https://gitlab.com/NERDYLOT/riot-rpm/raw/master/riot-messaging-client.fedora.repo
+          dest: /etc/yum.repos.d
+          
+      - name: Install all the cool apps
+        dnf: 
+          name: "{{ dnf_software }}" 
+          state: installed
 
-  - name: Git clone oh-my-zsh
-    git: 
-      repo: "{{ zsh }}" 
-      dest: "{{ home_user }}"
+     - name: Download oh-my-zsh install.sh
+       get_url: 
+         url: "{{ install }}" 
+         dest: "{{ home_user }}"  
+         mode: 755
 
-  - name: Download oh-my-zsh install.sh
-    get_url: 
-      url: "{{ install }}" 
-      dest: "{{ home_user }}"  
-      mode: 755
-
-      # - name: run the install.sh
-      #script: install.sh
-      #args:
-      #chdir: "{{ jlozadad }}"
-      #ignore_errors: yes
-
-      #- name: make install.sh executable
-      #file: "{{ jlozada }}"/oh-my-zsh/
-      #mode: 755
-
-#- name: install oh-my-zsh
-#  command:
+     - name: run the install.sh
+       script: "{{ home_user }}install.sh"
+       creates: "{{ home_user }}.oh-my-zsh"
 
