@@ -6,7 +6,9 @@ slack_repo: https://packagecloud.io/slacktechnologies/slack/fedora/21/x86_64
 slack_key: https://packagecloud.io/gpg.key
 rocketchat_repo: https://copr-be.cloud.fedoraproject.org/results/xenithorb/rocketchat-dev/fedora-$releasever-$basearch/
 rocketchat_key: https://copr-be.cloud.fedoraproject.org/results/xenithorb/rocketchat-dev/pubkey.gpg
-rocket:
+rpmfusion_free: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
+rpmfusion_nonfree: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-27.noarch.rpm
+rocket: rocketchat
 slack: slack
 zsh:
 home_user: vagrant
