@@ -1,7 +1,51 @@
 ---
 # defaults file for fedora-desktop
 
-dnf_software: vim,slack,rocketchat,konversation,virt-manager,libvirtd,keybase,steam,vlc,clementine,chromium,kdenlive,ansible,sqlite,qemu,python3,pip,postgresql,nmap,tc,mariadb-server,ktorrent,kmail,kget,kdeconnect,kde-filesystem,kde-print-manager,kde-apps,kde-partitionmanager,kaccounts-integration,kaccounts-providers,gnome-terminal,gnome-disk-utility,git,firefox,ffmpeg,dnf-plugins-core,icecat,gobby,flameshot,keepassxc,obs-studio,zsh,riot
+dnf_software: 
+  - vim
+  - slack
+  - rocketchat
+  - konversation
+  - virt-manager
+  - libvirtd
+  - keybase
+  - steam
+  - vlc
+  - clementine
+  - chromium
+  - kdenlive
+  - ansible
+  - sqlite
+  - qemu
+  - python3
+  - pip
+  - postgresql
+  - nmap
+  - tc
+  - mariadb-server
+  - ktorrent
+  - kmail
+  - kget
+  - kdeconnect
+  - kde-filesystem
+  - kde-print-manager
+  - kde-apps
+  - kde-partitionmanager
+  - kaccounts-integration
+  - kaccounts-providers
+  - gnome-terminal
+  - gnome-disk-utility
+  - git
+  - firefox
+  - ffmpeg
+  - dnf-plugins-core
+  - icecat,gobby
+  - flameshot
+  - keepassxc
+  - obs-studio
+  - zsh
+  - riot
+
 slack_repo: https://packagecloud.io/slacktechnologies/slack/fedora/21/x86_64
 slack_key: https://packagecloud.io/gpg.key
 rocketchat_repo: https://copr-be.cloud.fedoraproject.org/results/xenithorb/rocketchat-dev/fedora-$releasever-$basearch/
