@@ -1,12 +1,10 @@
 ---
 # tasks file for fedora-desktop
----
-# tasks file for rhel-software
   - block:
-      - name: Update system
-        dnf:
-          name: "*"
-          state: latest
+    #- name: Update system
+    #    dnf:
+    #      name: "*"
+    #      state: latest
 
       - name: install rpmfusion free
         dnf:
@@ -50,13 +48,24 @@
           name: "{{ dnf_software }}" 
           state: installed
 
-     - name: Download oh-my-zsh install.sh
-       get_url: 
-         url: "{{ install }}" 
-         dest: "{{ home_user }}"  
-         mode: 755
+      - name: Download oh-my-zsh install.sh
+        get_url: 
+          url: "{{ install }}" 
+          dest: "{{ home_user }}"  
+          mode: 755
 
-     - name: run the install.sh
-       script: "{{ home_user }}install.sh"
-       creates: "{{ home_user }}.oh-my-zsh"
+      - name: run the install.sh
+        script: "{{ home_user }}install.sh"
+        creates: "{{ home_user }}.oh-my-zsh"
+
+      - name: create the font dir
+        file:
+          state: directory
+          path: "{{ home_user }}"./local/share/fonts/NerdFonts
+
+      - name: copy powerlevel9k to your home dir
+        git:
+          repo: 'https://github.com/bhilburn/powerlevel9k.git'
+          dest: "{{ home_user }}".oh-my-zsh/custom/themes/powerlevel9k
+
 

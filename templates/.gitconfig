@@ -1,0 +1,5 @@
+[user]
+	email = {{ home_user_email }}
+	name = {{ home_user_name }}
+[gitreview]
+	username = {{ git_username }}
