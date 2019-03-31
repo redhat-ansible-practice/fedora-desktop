@@ -1,48 +1,17 @@
 ---
 # tasks file for fedora-desktop
   - block:
-    #- name: Update system
-    #    dnf:
-    #      name: "*"
-    #      state: latest
 
       - name: install rpmfusion free
         dnf:
           name: "{{ rpmfusion_free }}"
-          state: latest
+          state: installed
 
       - name: install rpmfusion nonfree
         dnf:
           name: "{{ rpmfusion_nonfree }}"
-          state: latest
+          state: installed
 
-      - name: add the slack repo # I found this repo after I installed slack.
-        yum_repository: 
-          name: slack 
-          baseurl: "{{ slack_repo }}" 
-          description: slack 
-          enabled: 1 
-          gpgcheck: yes 
-          gpgkey: "{{ slack_key }}" 
-          sslverify: 1 
-          sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-
-      - name: add the rocketchat repo
-        yum_repository:
-          name: slack
-          baseurl: "{{ rocketchat_repo }}"
-          description: rocketchat
-          enabled: 1
-          gpgcheck: yes
-          gpgkey: "{{ rocketchat_key }}"
-          sslverify: 1
-          sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-
-      - name: add riot matrix repo
-        get_url:
-          url: https://gitlab.com/NERDYLOT/riot-rpm/raw/master/riot-messaging-client.fedora.repo
-          dest: /etc/yum.repos.d
-          
       - name: Install all the cool apps
         dnf: 
           name: "{{ dnf_software }}" 
@@ -50,7 +19,7 @@
 
       - name: Download oh-my-zsh install.sh
         get_url: 
-          url: "{{ install }}" 
+          url: "{{ ohmyzsh_install }}" 
           dest: "{{ home_user }}"  
           mode: 755
 
@@ -63,9 +32,9 @@
           state: directory
           path: "{{ home_user }}"./local/share/fonts/NerdFonts
 
-      - name: copy powerlevel9k to your home dir
+      - name: "copy powerlevel9k to your home dir"
         git:
-          repo: 'https://github.com/bhilburn/powerlevel9k.git'
-          dest: "{{ home_user }}".oh-my-zsh/custom/themes/powerlevel9k
+          repo: "https://github.com/bhilburn/powerlevel9k.git"
+          dest: "{{ home_user }}.oh-my-zsh/custom/themes/powerlevel9k"
 
 

@@ -1,15 +1,62 @@
 ---
 # defaults file for fedora-desktop
 
-dnf_software: 
-  - vim
-  - slack
-  - rocketchat
+fedora_gaming:
+
+  dev_rpms:
+    - "@Development Tools"
+    - cmake
+    - git
+    - gcc-c++
+    - python
+    - python-pip
+    - vim
+    - dnf-plugins-core
+    - fedora-packager
+    - fedora-review
+    - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-29.noarch.rpm
+    - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-29.noarch.rpm
+
+  gaming:
+    - steam
+    - obs-studio
+
+  dolphin_emu:
+    - libXext-devel
+    - libgudev
+    - gtk+-devel
+    - wxGTK-devel
+    - systemd-devel
+    - openal-soft-devel
+    - libevdev-devel
+    - libao-devel
+    - SOIL-devel
+    - libXrandr-devel
+    - pulseaudio-libs-devel
+    - bluez-libs-devel
+    - libusb-devel
+    - ffmpeg
+    - ffmpeg-devel
+
+  rpcs3:
+    - glew
+    - glew-devel
+    - libatomic
+    - libudev-devel
+    - openal-devel
+    - qt5-devel
+    - vulkan-devel
+
+dnf_software:
+  - vlc
+  - clementine
+  - kdenlive
+  - "https://downloads.slack-edge.com/linux_releases/slack-{{ slack_version }}.fc21.x86_64.rpm"
+  - "https://github.com/RocketChat/Rocket.Chat.Electron/releases/download/2.15.1/rocketchat-{{ rocketchat_version }}.x86_64.rpm"
   - konversation
   - virt-manager
   - libvirtd
   - keybase
-  - steam
   - vlc
   - clementine
   - chromium
@@ -35,23 +82,19 @@ dnf_software:
   - kaccounts-providers
   - gnome-terminal
   - gnome-disk-utility
-  - git
   - firefox
   - ffmpeg
-  - dnf-plugins-core
-  - icecat,gobby
+  - icecat
+  - gobby
   - flameshot
   - keepassxc
-  - obs-studio
   - zsh
-  - riot
 
-slack_repo: https://packagecloud.io/slacktechnologies/slack/fedora/21/x86_64
-slack_key: https://packagecloud.io/gpg.key
-rocketchat_repo: https://copr-be.cloud.fedoraproject.org/results/xenithorb/rocketchat-dev/fedora-$releasever-$basearch/
-rocketchat_key: https://copr-be.cloud.fedoraproject.org/results/xenithorb/rocketchat-dev/pubkey.gpg
-rpmfusion_free: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
-rpmfusion_nonfree: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-27.noarch.rpm
+rpmfusion_free: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-29.noarch.rpm
+rpmfusion_nonfree: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-29.noarch.rpm
+slack_version: 3.3.8-0.1
+rocketchat_version: 2-15.1
+ohmyzsh_install: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
 rocket: rocketchat
 slack: slack
 zsh:

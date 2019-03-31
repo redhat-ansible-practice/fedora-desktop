@@ -3,3 +3,7 @@
   remote_user: root
   roles:
     - fedora-desktop
+  tasks:
+
+    - name: install python
+      raw: " dnf install python -y"
