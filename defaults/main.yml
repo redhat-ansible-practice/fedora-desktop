@@ -99,4 +99,7 @@ rocket: rocketchat
 slack: slack
 zsh:
 home_user: vagrant
-
+dev_rpms: True
+gaming_rpms: True
+dolphin_emu: True
+rpcs3: True

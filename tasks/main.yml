@@ -1,6 +1,7 @@
 ---
 # tasks file for fedora-desktop
-  - block:
+  - name: Install all the applications. 
+    block:
 
       - name: install rpmfusion free
         dnf:
@@ -32,9 +33,31 @@
           state: directory
           path: "{{ home_user }}"./local/share/fonts/NerdFonts
 
-      - name: "copy powerlevel9k to your home dir"
+      - name: Copy the theme over to the home directory
         git:
           repo: "https://github.com/bhilburn/powerlevel9k.git"
           dest: "{{ home_user }}.oh-my-zsh/custom/themes/powerlevel9k"
 
 
+  - name: install the dev rpms and require repo's
+    dnf:
+      name: "{{ fedora_gaming.dev_rpms }}"
+      state: install
+    when: dev_rpms
+  - name: install the gaming rpms
+    dnf:
+      name: "{{ fedora_gaming.gaming }}"
+      state: install
+    when: gaming_rpms
+
+  - name: install all the dolphin-emu required rpms
+    dnf:
+      name: "{{ fedora_gaming.dolphin_emu }}"
+      state: install
+    when: dolphin_emu
+
+  - name: install all the rpcs3 required rpms
+    dnf:
+      name: "{{ fedora_gaming.rpcs3 }}"
+      state: install
+    when: rpcs3
