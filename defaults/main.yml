@@ -1,12 +1,15 @@
 ---
 # defaults file for fedora-desktop
 
-fedora_gaming:
+fedora_desktop:
+  
+  required_rpms:
+    - "libselinux-python"
+    - git
 
   dev_rpms:
     - "@Development Tools"
     - cmake
-    - git
     - gcc-c++
     - python
     - python-pip
@@ -14,8 +17,8 @@ fedora_gaming:
     - dnf-plugins-core
     - fedora-packager
     - fedora-review
-    - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-29.noarch.rpm
-    - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-29.noarch.rpm
+    - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-30.noarch.rpm
+    - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-30.noarch.rpm
 
   gaming:
     - steam
@@ -52,11 +55,11 @@ dnf_software:
   - clementine
   - kdenlive
   - "https://downloads.slack-edge.com/linux_releases/slack-{{ slack_version }}.fc21.x86_64.rpm"
-  - "https://github.com/RocketChat/Rocket.Chat.Electron/releases/download/2.15.1/rocketchat-{{ rocketchat_version }}.x86_64.rpm"
+  - "https://github.com/RocketChat/Rocket.Chat.Electron/releases/download/2.15.1/rocketchat-2.15.1.x86_64.rpm"
   - konversation
+  - "@virtualization"
   - virt-manager
-  - libvirtd
-  - keybase
+  #- keybase
   - vlc
   - clementine
   - chromium
@@ -65,7 +68,8 @@ dnf_software:
   - sqlite
   - qemu
   - python3
-  - pip
+  - python2-pip
+  - python3-pip
   - postgresql
   - nmap
   - tc
@@ -73,10 +77,10 @@ dnf_software:
   - ktorrent
   - kmail
   - kget
-  - kdeconnect
+  - kdeconnectd
   - kde-filesystem
   - kde-print-manager
-  - kde-apps
+  #- kde-apps
   - kde-partitionmanager
   - kaccounts-integration
   - kaccounts-providers
@@ -90,16 +94,18 @@ dnf_software:
   - keepassxc
   - zsh
 
-rpmfusion_free: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-29.noarch.rpm
-rpmfusion_nonfree: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-29.noarch.rpm
+rpmfusion_free: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-30.noarch.rpm
+rpmfusion_nonfree: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-30.noarch.rpm
 slack_version: 3.3.8-0.1
 rocketchat_version: 2-15.1
-ohmyzsh_install: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+ohmyzsh_install: "https://github.com/robbyrussell/oh-my-zsh.git"
 rocket: rocketchat
 slack: slack
 zsh:
-home_user: vagrant
+home_path: /home/
+user: jlozadad
+user_home: "{{ home_path }}{{ user }}/"
 dev_rpms: True
-gaming_rpms: True
-dolphin_emu: True
-rpcs3: True
+gaming_rpms: False
+dolphin_emu: False
+rpcs3: False

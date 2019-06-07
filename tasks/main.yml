@@ -3,6 +3,11 @@
   - name: Install all the applications. 
     block:
 
+      - name: Install required rpms
+        dnf:
+          name: "{{ fedora_desktop.required_rpms }}"
+          state: installed
+
       - name: install rpmfusion free
         dnf:
           name: "{{ rpmfusion_free }}"
@@ -19,45 +24,62 @@
           state: installed
 
       - name: Download oh-my-zsh install.sh
-        get_url: 
-          url: "{{ ohmyzsh_install }}" 
-          dest: "{{ home_user }}"  
-          mode: 755
+        become_user: "{{ user }}"
+        git: 
+          repo: "{{ ohmyzsh_install }}"
+          version: master 
+          dest: "{{ user_home }}.oh-my-zsh"  
 
-      - name: run the install.sh
-        script: "{{ home_user }}install.sh"
-        creates: "{{ home_user }}.oh-my-zsh"
-
+      - name: Copy over the oh-my-zsh directory
+        become_user: "{{ user }}"
+        copy: 
+          src: "{{ user_home }}.oh-my-zsh/templates/zshrc.zsh-template"
+          dest: "{{ user_home }}.zshrc"
+          remote_src: yes
+        notify:
+          - change default shell
+        
       - name: create the font dir
+        become_user: "{{ user }}"
         file:
           state: directory
-          path: "{{ home_user }}"./local/share/fonts/NerdFonts
+          path: "{{ user_home }}.local/share/fonts/"
+          #NerdFonts
 
       - name: Copy the theme over to the home directory
+        become_user: "{{ user }}"
         git:
           repo: "https://github.com/bhilburn/powerlevel9k.git"
-          dest: "{{ home_user }}.oh-my-zsh/custom/themes/powerlevel9k"
-
+          dest: "{{ user_home }}.oh-my-zsh/custom/themes/powerlevel9k"
+      
+      - name: Copy over the nerd icons
+        become_user: "{{ user }}"
+        get_url:
+          group: "{{ user }}"
+          owner: "{{ user }}"
+          url: "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf"
+          dest: "{{ user_home }}.local/share/fonts/droid_sans_mono_powerline_nerd_font_complete.otf"
 
   - name: install the dev rpms and require repo's
     dnf:
-      name: "{{ fedora_gaming.dev_rpms }}"
-      state: install
+      name: "{{ fedora_desktop.dev_rpms }}"
+      state: installed
     when: dev_rpms
+
   - name: install the gaming rpms
     dnf:
-      name: "{{ fedora_gaming.gaming }}"
-      state: install
+      name: "{{ fedora_desktop.gaming }}"
+      state: installed
     when: gaming_rpms
 
   - name: install all the dolphin-emu required rpms
     dnf:
-      name: "{{ fedora_gaming.dolphin_emu }}"
-      state: install
+      name: "{{ fedora_desktop.dolphin_emu }}"
+      state: installed
     when: dolphin_emu
 
   - name: install all the rpcs3 required rpms
     dnf:
-      name: "{{ fedora_gaming.rpcs3 }}"
-      state: install
+      name: "{{ fedora_desktop.rpcs3 }}"
+      state: installed
     when: rpcs3

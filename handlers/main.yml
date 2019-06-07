@@ -1,2 +1,6 @@
 ---
 # handlers file for fedora-desktop
+
+  - name: change default shell
+    command: "chsh -s /bin/zsh"
+    changed_when: False
